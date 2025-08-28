@@ -85,22 +85,22 @@ public class MiFile {
                 double tamArch = 0;
                 double tamFiles = 0;
                 System.out.println("Directorio de: " + arch.getAbsolutePath());
-                System.out.println("ULTIMA MODIFICACION - TIPO - TAMAÑO - NOMBRE");
+                System.out.println("ULTIMA MODIFICACION          TIPO   TAMAÑO  NOMBRE");
                 for (File f : arch.listFiles()) {
                     if (!f.isHidden()) {
                         if (f.isFile()) {
                             cantFiles++;
-                            tamFiles += f.length();
+                            tamFiles += (f.length()/(1024.0));
                         } else if (f.isDirectory()) {
                             cantArch++;
-                            tamArch += f.length();
+                            tamArch += (f.length()/(1024.0*1024.0*1024.0));
                         }
                         modis += new Date(f.lastModified()) + "   " + ((f.isFile()) ? "FILE" : "<DIR>")
-                                + "   " + ((f.isFile()) ? f.length() + "KB" : "-")  + "   " + f.getName() + "\n";
+                                + "   " + ((f.isFile()) ? String.format("%.2f",(f.length()/1024.0)) + "KB" : "-")  + "     " + f.getName() + "\n";
                     }
                 }
                 System.out.println(modis);
-                System.out.println("Files: " + cantFiles + " - " + tamFiles + "KB");
+                System.out.println("Files: " + cantFiles + " - " + String.format("%.2f",tamFiles) + "KB");
                 System.out.println("Archivos: " + cantArch + " - " + String.format("%.2f",tamArch) + "GB Libres");
             } else {
                 System.out.println("Porfavor, use un directorio para mostrar informacion y no un archivo");
